@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Message.h"
-#include "Timestamp.h"
+#include "rudder/message.h"
+#include "rudder/timestamp.h"
 
 namespace rudder {
 

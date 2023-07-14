@@ -6,8 +6,38 @@ set(PROJECT_NAME "rudder-sdk-cpp")
 
 file(STRINGS VERSION CURRENT_VERSION)
 
-project(${PROJECT_NAME} VERSION ${CURRENT_VERSION})
+project(${PROJECT_NAME} VERSION ${CURRENT_VERSION} LANGUAGES CXX)
 
+if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+    set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMake")
+    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+    set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
+else()
+    # Check required c++ standard of parent project
+    if(CMAKE_CXX_STANDARD)
+        set(PARENT_CXX_STANDARD ${CMAKE_CXX_STANDARD})
+        message(STATUS "CXX standard of parent project: ${PARENT_CXX_STANDARD}")
+    endif()
+endif()
+
+
+if (PARENT_CXX_STANDARD)
+    # Don't set CMAKE_CXX_STANDARD if it is already set by parent project
+    if (PARENT_CXX_STANDARD LESS 17)
+        message(FATAL_ERROR "cpr ${cpr_VERSION} does not support ${PARENT_CXX_STANDARD}. Please use cpr <= 1.9.x")
+    endif()
+else()
+    # Set standard version if not already set by potential parent project
+    set(CMAKE_CXX_STANDARD 17)
+endif()
+
+# Color our warnings and errors
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_compile_options (-fdiagnostics-color=always)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_compile_options (-fcolor-diagnostics)
+endif ()
 
 # Fetch libcpr
 include(FetchContent)
@@ -18,51 +48,24 @@ FetchContent_Declare(cpr
     ) # The commit hash for 1.10.x. Replace with the latest from: https://github.com/libcpr/cpr/releases
 FetchContent_MakeAvailable(cpr)
 
-
 FetchContent_Declare(json 
     URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
     )
 FetchContent_MakeAvailable(json)
 
-# Reads in VERSION file and sticks in it CURRENT_VERSION variable
-# Be sure the file has no newlines
 
-set(HeaderFiles
-    rudder/message/MessageType.h
-    rudder/message/Message.h
-    rudder/message/Identify.h
-    rudder/message/Timestamp.h
-    )
+add_subdirectory(rudder)
+add_subdirectory(include)
 
-set(SourceFiles
-    rudder/message/Identify.cpp
-    rudder/message/Timestamp.cpp
-    rudder/message/Identify.h
-    )
-
-add_library(
-    "${PROJECT_NAME}"
-    SHARED
-    ${SourceFiles}
-    )
-
-target_compile_features("${PROJECT_NAME}" PRIVATE cxx_std_17)
-
-target_link_libraries(
-    "${PROJECT_NAME}"
-    PRIVATE
-    nlohmann_json::nlohmann_json
-    )
+# target_link_libraries(
+#     "${PROJECT_NAME}"
+#     PRIVATE
+#     nlohmann_json::nlohmann_json
+#     )
 
 # target_link_libraries("${PROJECT_NAME}"
 #     PRIVATE
 #     cpr::cpr
 #     )
-# Color our warnings and errors
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    add_compile_options (-fdiagnostics-color=always)
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    add_compile_options (-fcolor-diagnostics)
-endif ()
 
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MessageType.h"
+#include "rudder/messagetype.h"
 
 #include <nlohmann/json.hpp>
 
