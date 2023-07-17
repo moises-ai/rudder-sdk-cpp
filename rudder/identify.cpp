@@ -1,14 +1,11 @@
 #include "rudder/identify.h"
+#include "rudder/utils.h"
 
 namespace rudder {
 
 nlohmann::json Identify::compose() {
-    if (!mUserId.has_value() && !mAnonymousId.has_value()) {
-        throw std::runtime_error("Only one user should be assigned at a time");
-    }
-    if (mContext.has_value()) {
-        // Check if reserved key;
-    }
+    validateUserId();
+    validateAndUpdateContext();
 
     auto json = nlohmann::json();
 
@@ -68,6 +65,7 @@ IdentifyBuilder& IdentifyBuilder::withIntegrations(const nlohmann::json& integra
 
 std::unique_ptr<Identify> IdentifyBuilder::build() {
     auto ptr = std::unique_ptr<Identify>(new Identify(mIdentify));
+    ptr->insertTimestamp();
     return std::move(ptr);
 }
 

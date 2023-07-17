@@ -1,5 +1,10 @@
 #pragma once
 
+#include <optional>
+#include <string>
+
+#include <nlohmann/json.hpp>
+
 #include "rudder/message.h"
 #include "rudder/timestamp.h"
 
@@ -15,11 +20,7 @@ private:
     Identify();
 
 private:
-    std::optional<std::string> mUserId;
-    std::optional<std::string> mAnonymousId;
     std::optional<nlohmann::json> mTraits;
-    std::optional<Timestamp> mTimestamp;
-    std::optional<nlohmann::json> mContext;
     std::optional<nlohmann::json> mIntegrations;
 };
 
