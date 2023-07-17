@@ -11,6 +11,7 @@ target_sources(cpr PRIVATE
     rudder/message.h
     rudder/identify.h
     rudder/track.h
+    rudder/page.h
     )
 
 install(DIRECTORY rudder-sdk-cpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
