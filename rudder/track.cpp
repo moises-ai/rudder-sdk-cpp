@@ -9,6 +9,8 @@ nlohmann::json Track::compose() {
 
     auto json = nlohmann::json();
 
+    json["event"] = mEvent;
+
     if (const auto& userId = mUserId) {
         json["user_id"] = *userId;
     }
@@ -24,9 +26,6 @@ nlohmann::json Track::compose() {
     if (const auto& integrations = mIntegrations) {
         json["integrations"] = *integrations;
     }
-    if (const auto& event = mEvent) {
-        json["event"] = *event;
-    }
     if (const auto& properties = mProperties) {
         json["properties"] = *properties;
     }
@@ -34,7 +33,11 @@ nlohmann::json Track::compose() {
     return json;
 }
 
-Track::Track() : Message(MessageType::Identify) {}
+Track::Track() : Message(MessageType::Track) {}
+
+TrackBuilder::TrackBuilder(const std::string& event) {
+    mTrack.mEvent = event;
+}
 
 TrackBuilder& TrackBuilder::withUserId(const std::string& userId) {
     mTrack.mUserId = userId;
@@ -43,11 +46,6 @@ TrackBuilder& TrackBuilder::withUserId(const std::string& userId) {
 
 TrackBuilder& TrackBuilder::withAnonymousId(const std::string& anonymousId) {
     mTrack.mAnonymousId = anonymousId;
-    return *this;
-}
-
-TrackBuilder& TrackBuilder::withEvent(const std::string& event) {
-    mTrack.mEvent = event;
     return *this;
 }
 

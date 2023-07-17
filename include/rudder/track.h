@@ -20,7 +20,7 @@ private:
     Track();
 
 private:
-    std::optional<std::string> mEvent;
+    std::string mEvent;
     std::optional<nlohmann::json> mProperties;
     std::optional<nlohmann::json> mIntegrations;
 };
@@ -28,9 +28,11 @@ private:
 
 class TrackBuilder {
 public:
+    TrackBuilder(const std::string& event);
+
+public:
     TrackBuilder& withUserId(const std::string& userId);
     TrackBuilder& withAnonymousId(const std::string& anonymousId);
-    TrackBuilder& withEvent(const std::string& event);
     TrackBuilder& withTimestamp(const Timestamp& timestamp);
     TrackBuilder& withContext(const nlohmann::json& context);
     TrackBuilder& withProperties(const nlohmann::json& properties);
