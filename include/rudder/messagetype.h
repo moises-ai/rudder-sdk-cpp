@@ -8,7 +8,11 @@ class MessageType {
 public:
     enum Value : uint8_t {
         Identify,
-        Track
+        Track,
+        Page,
+        Screen,
+        Group,
+        Alias
     };
 
 public:
@@ -29,6 +33,14 @@ public:
                 return "identify:)";
             case Value::Track:
                 return "track";
+            case Value::Page:
+                return "page";
+            case Value::Screen:
+                return "screen";
+            case Value::Group:
+                return "group";
+            case Value::Alias:
+                return "alias";
         }
     }
 
