@@ -10,10 +10,10 @@ nlohmann::json Identify::compose() {
     auto json = nlohmann::json();
 
     if (const auto& userId = mUserId) {
-        json["user_id"] = *userId;
+        json["userId"] = *userId;
     }
     if (const auto& anonymousId = mAnonymousId) {
-        json["anonymous_id"] = *anonymousId;
+        json["anonymousId"] = *anonymousId;
     }
     if (const auto& context = mContext) {
         json["context"] = *context;

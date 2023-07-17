@@ -12,10 +12,10 @@ nlohmann::json Track::compose() {
     json["event"] = mEvent;
 
     if (const auto& userId = mUserId) {
-        json["user_id"] = *userId;
+        json["userId"] = *userId;
     }
     if (const auto& anonymousId = mAnonymousId) {
-        json["anonymous_id"] = *anonymousId;
+        json["anonymousId"] = *anonymousId;
     }
     if (const auto& context = mContext) {
         json["context"] = *context;
