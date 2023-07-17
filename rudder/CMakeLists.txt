@@ -7,6 +7,7 @@ add_library(rudder-sdk-cpp
     track.cpp
     page.cpp
     screen.cpp
+    group.cpp
     )
 
 add_library(rudder ALIAS rudder-sdk-cpp)
