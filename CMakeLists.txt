@@ -8,6 +8,8 @@ file(STRINGS VERSION CURRENT_VERSION)
 
 project(${PROJECT_NAME} VERSION ${CURRENT_VERSION} LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
     set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMake")
@@ -31,6 +33,23 @@ else()
     # Set standard version if not already set by potential parent project
     set(CMAKE_CXX_STANDARD 17)
 endif()
+
+macro(rudder_option OPTION_NAME OPTION_TEXT OPTION_DEFAULT)
+    option(${OPTION_NAME} ${OPTION_TEXT} ${OPTION_DEFAULT})
+    if(DEFINED ENV{${OPTION_NAME}})
+        # Allow overriding the option through an environment variable
+        set(${OPTION_NAME} $ENV{${OPTION_NAME}})
+    endif()
+    if(${OPTION_NAME})
+        add_definitions(-D${OPTION_NAME})
+    endif()
+    message(STATUS "  ${OPTION_NAME}: ${${OPTION_NAME}}")
+endmacro()
+
+option(BUILD_SHARED_LIBS "Build libraries as shared libraries" ON)
+message(STATUS "C++ Requests CMake Options")
+message(STATUS "=======================================================")
+rudder_option(RUDDER_INSERT_TIMESTAMP "Set to OFF to disable automatically insertion of timestamps." ON)
 
 # Color our warnings and errors
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")

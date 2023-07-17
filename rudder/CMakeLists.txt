@@ -9,7 +9,7 @@ add_library(rudder ALIAS rudder-sdk-cpp)
 
 target_link_libraries(
     rudder-sdk-cpp
-    PRIVATE
+    PUBLIC
     nlohmann_json::nlohmann_json
     )
 
