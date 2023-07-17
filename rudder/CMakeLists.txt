@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.24.1)
 
 add_library(rudder-sdk-cpp
-    identify.cpp
     timestamp.cpp
     message.cpp
+    identify.cpp
+    track.cpp
     )
 
 add_library(rudder ALIAS rudder-sdk-cpp)
