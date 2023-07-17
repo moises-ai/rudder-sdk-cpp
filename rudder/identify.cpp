@@ -15,14 +15,14 @@ nlohmann::json Identify::compose() {
     if (const auto& anonymousId = mAnonymousId) {
         json["anonymous_id"] = *anonymousId;
     }
-    if (const auto& traits = mTraits) {
-        json["traits"] = *traits;
+    if (const auto& context = mContext) {
+        json["context"] = *context;
     }
     if (const auto& timestamp = mTimestamp) {
         json["timestamp"] = (*timestamp).getValue();
     }
-    if (const auto& context = mContext) {
-        json["context"] = *context;
+    if (const auto& traits = mTraits) {
+        json["traits"] = *traits;
     }
     if (const auto& integrations = mIntegrations) {
         json["integrations"] = *integrations;
