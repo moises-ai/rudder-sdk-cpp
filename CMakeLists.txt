@@ -76,15 +76,15 @@ FetchContent_MakeAvailable(json)
 add_subdirectory(rudder)
 add_subdirectory(include)
 
-# target_link_libraries(
-#     "${PROJECT_NAME}"
-#     PRIVATE
-#     nlohmann_json::nlohmann_json
-#     )
+target_link_libraries(
+    "${PROJECT_NAME}"
+    PUBLIC
+    nlohmann_json::nlohmann_json
+    )
 
-# target_link_libraries("${PROJECT_NAME}"
-#     PRIVATE
-#     cpr::cpr
-#     )
+target_link_libraries("${PROJECT_NAME}"
+    PRIVATE
+    cpr::cpr
+    )
 
 

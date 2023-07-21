@@ -5,7 +5,7 @@ target_include_directories(rudder-sdk-cpp PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/rudder_generated_includes/>)
 
-target_sources(cpr PRIVATE
+target_sources(cpr PUBLIC
     rudder/timestamp.h
     rudder/messagetype.h
     rudder/message.h
@@ -15,6 +15,7 @@ target_sources(cpr PRIVATE
     rudder/screen.h
     rudder/group.h
     rudder/alias.h
+    rudder/rudder.h
     )
 
 install(DIRECTORY rudder-sdk-cpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

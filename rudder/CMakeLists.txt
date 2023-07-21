@@ -9,6 +9,7 @@ add_library(rudder-sdk-cpp
     screen.cpp
     group.cpp
     alias.cpp
+    rudder.cpp
     )
 
 add_library(rudder ALIAS rudder-sdk-cpp)
