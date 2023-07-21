@@ -18,6 +18,9 @@ public:
 public:
     virtual nlohmann::json compose() = 0;
 
+public:
+    MessageType getType() const;
+
 protected:
     void insertTimestamp();
     void validateUserId() const;

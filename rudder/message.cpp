@@ -5,6 +5,10 @@
 namespace rudder {
     Message::Message(MessageType type) : mMessageType(type) {}
 
+    MessageType Message::getType() const {
+        return mMessageType;
+    }
+
     void Message::insertTimestamp() {
 #ifdef RUDDER_INSERT_TIMESTAMP
         mTimestamp = Timestamp::now();

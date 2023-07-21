@@ -30,7 +30,7 @@ public:
     [[nodiscard]] std::string to_string() const {
         switch (mValue) {
             case Value::Identify:
-                return "identify:)";
+                return "identify";
             case Value::Track:
                 return "track";
             case Value::Page:
