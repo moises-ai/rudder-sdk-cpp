@@ -25,7 +25,5 @@ namespace rudder {
         if (mContext.has_value() && hasReservedKeys(mContext.value())) {
             throw std::runtime_error("Context should not use reserved keys");
         }
-        
-        mContext->update(getDefaultContext());
     }
 } // namespace rudder;

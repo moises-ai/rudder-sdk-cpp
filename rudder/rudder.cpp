@@ -1,7 +1,9 @@
 #include "rudder/rudder.h"
+#include "rudder/utils.h"
 
 #include <ctime>
-#include <iostream>
+#include <stdexcept>
+
 #include "cpr/auth.h"
 #include "cpr/cpr.h"
 
@@ -13,8 +15,10 @@ namespace rudder {
         const std::string& dataPlaneUrl
     ) : mWriteKey(writeKey), mDataPlaneURL(dataPlaneUrl) {}
 
-    void Rudder::send(std::unique_ptr<Message> message) const {
-        const auto payload = message->compose();
+    void Rudder::send(const std::unique_ptr<Message>& message) const {
+        auto payload = message->compose();
+        payload.update(getDefaultContext());
+
         const auto response = cpr::Post(
             cpr::Url { mDataPlaneURL + "/v1/" + message->getType().to_string() },
             cpr::Authentication{mWriteKey, "", cpr::AuthMode::BASIC},
@@ -26,7 +30,7 @@ namespace rudder {
         );
 
         if (response.status_code != 200) {
-            throw std::runtime_error("Failed with code: " + std::to_string(response.status_code));
+            throw std::runtime_error("Failed with code: " + std::to_string(response.status_code) + " - " + response.error.message);
         }
 
     }
