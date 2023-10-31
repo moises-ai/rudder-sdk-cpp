@@ -7,7 +7,7 @@ nlohmann::json Identify::compose() {
     validateUserId();
     validateAndUpdateContext();
 
-    auto json = nlohmann::json();
+    auto json = Message::compose();
 
     if (const auto& userId = mUserId) {
         json["userId"] = *userId;

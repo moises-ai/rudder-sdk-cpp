@@ -7,7 +7,7 @@ nlohmann::json Page::compose() {
     validateUserId();
     validateAndUpdateContext();
 
-    auto json = nlohmann::json();
+    auto json = Message::compose();
 
     json["name"] = mName;
 

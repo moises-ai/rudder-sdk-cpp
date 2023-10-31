@@ -7,7 +7,7 @@ nlohmann::json Group::compose() {
     validateUserId();
     validateAndUpdateContext();
 
-    auto json = nlohmann::json();
+    auto json = Message::compose();
 
     json["groupId"] = mGroupId;
 

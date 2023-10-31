@@ -16,10 +16,11 @@ public:
     virtual ~Message() = default;
 
 public:
-    virtual nlohmann::json compose() = 0;
+    virtual nlohmann::json compose();
 
 public:
     MessageType getType() const;
+    void withEvent(const std::string& eventName);
 
 protected:
     void insertTimestamp();
@@ -32,6 +33,7 @@ protected:
     std::optional<std::string> mUserId;
     std::optional<std::string> mAnonymousId;
     std::optional<nlohmann::json> mContext;
+    std::optional<std::string> mEvent;
 
 };
 

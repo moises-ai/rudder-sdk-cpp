@@ -9,6 +9,20 @@ namespace rudder {
         return mMessageType;
     }
 
+    nlohmann::json Message::compose() {
+        auto json = nlohmann::json();
+
+        if (const auto& event  = mEvent) {
+            json["event"] = *event;
+        }
+
+        return json;
+    }
+
+    void Message::withEvent(const std::string& eventName) {
+        mEvent = eventName;
+    }
+
     void Message::insertTimestamp() {
 #ifdef RUDDER_INSERT_TIMESTAMP
         mTimestamp = Timestamp::now();
